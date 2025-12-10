@@ -1,0 +1,390 @@
+{
+  "transactions": [
+    {
+      "id": "13",
+      "amount": 120.23,
+      "date": "2025-10-13",
+      "category": 3,
+      "description": "Additional rent payment",
+      "type": "expense"
+    },
+    {
+      "id": "15",
+      "amount": 300.67,
+      "date": "2025-10-15",
+      "category": 2,
+      "description": "Bonus payment",
+      "type": "income"
+    },
+    {
+      "id": "16",
+      "amount": 25.87,
+      "date": "2025-10-16",
+      "category": 5,
+      "description": "Book purchase",
+      "type": "expense"
+    },
+    {
+      "id": "17",
+      "amount": 10.25,
+      "date": "2025-10-17",
+      "category": 1,
+      "description": "Snack at cafe",
+      "type": "expense"
+    },
+    {
+      "id": "18",
+      "amount": 150.09,
+      "date": "2025-10-18",
+      "category": 6,
+      "description": "Investment contribution",
+      "type": "expense"
+    },
+    {
+      "id": "19",
+      "amount": 60.99,
+      "date": "2025-10-19",
+      "category": 5,
+      "description": "Electronics accessory",
+      "type": "expense"
+    },
+    {
+      "id": "20",
+      "amount": 90.12,
+      "date": "2025-10-20",
+      "category": 4,
+      "description": "Gas bill",
+      "type": "expense"
+    },
+    {
+      "id": "21",
+      "amount": 175.34,
+      "date": "2025-10-21",
+      "category": 7,
+      "description": "Gift received",
+      "type": "income"
+    },
+    {
+      "id": "b622",
+      "amount": 500.22,
+      "date": "2025-10-11",
+      "category": 6,
+      "description": "Transfer to personal savings accoun5",
+      "type": "expense"
+    },
+    {
+      "id": "e669",
+      "amount": 500.66,
+      "date": "2025-10-05",
+      "category": 6,
+      "description": "От друга",
+      "type": "income"
+    },
+    {
+      "id": "8145",
+      "amount": 500.44,
+      "date": "2025-10-11",
+      "category": 6,
+      "description": "Transfer to personal savings account",
+      "type": "expense"
+    },
+    {
+      "id": "6a40",
+      "amount": 22.22,
+      "date": "2000-10-10",
+      "category": 1,
+      "description": "2",
+      "type": "income"
+    },
+    {
+      "id": "5ed4",
+      "amount": 22.22,
+      "date": "2000-10-10",
+      "category": 1,
+      "description": "2",
+      "type": "income"
+    },
+    {
+      "id": "1cd4",
+      "amount": 500.66,
+      "date": "2025-10-11",
+      "category": 6,
+      "description": "От друга",
+      "type": "income"
+    },
+    {
+      "id": "403f",
+      "amount": 500.66,
+      "date": "2025-10-11",
+      "category": 6,
+      "description": "От друга",
+      "type": "income"
+    },
+    {
+      "id": "b62c",
+      "amount": 500.66,
+      "date": "2025-10-11",
+      "category": 6,
+      "description": "От друга",
+      "type": "income"
+    },
+    {
+      "id": "316b",
+      "amount": 500.66,
+      "date": "2025-10-11",
+      "category": 6,
+      "description": "От друга",
+      "type": "income"
+    },
+    {
+      "id": "3316",
+      "amount": 500.66,
+      "date": "2025-10-11",
+      "category": 6,
+      "description": "От друга",
+      "type": "income"
+    },
+    {
+      "id": "56a9",
+      "amount": 22.22,
+      "date": "2000-10-10",
+      "category": 1,
+      "description": "eeee",
+      "type": "income"
+    },
+    {
+      "id": "4883",
+      "amount": 500.22,
+      "date": "2023-10-11",
+      "category": 1,
+      "description": "попоп",
+      "type": "income"
+    },
+    {
+      "id": "2371",
+      "amount": 500.22,
+      "date": "2025-10-11",
+      "category": 6,
+      "description": "ыа",
+      "type": "expense"
+    },
+    {
+      "id": "5666",
+      "amount": 22.22,
+      "date": "2025-10-15",
+      "category": 6,
+      "description": "dsds",
+      "type": "expense"
+    },
+    {
+      "id": "53b6",
+      "amount": 45.44,
+      "date": "2025-10-24",
+      "category": 1,
+      "description": "4444",
+      "type": "expense"
+    },
+    {
+      "id": "1484",
+      "amount": 22.22,
+      "date": "2025-10-09",
+      "category": 1,
+      "description": "sdfsdffsd",
+      "type": "income"
+    },
+    {
+      "id": "a0f7",
+      "amount": 22.22,
+      "date": "2025-10-15",
+      "category": 1,
+      "description": "weeew",
+      "type": "income"
+    },
+    {
+      "id": "0e4b",
+      "amount": 22.22,
+      "date": "2025-10-17",
+      "category": 8,
+      "description": "ww",
+      "type": "income"
+    },
+    {
+      "id": "7802",
+      "amount": 22.22,
+      "date": "2025-10-02",
+      "category": 1,
+      "description": "ss",
+      "type": "expense"
+    },
+    {
+      "id": "543f",
+      "amount": 22.22,
+      "date": "2025-10-18",
+      "category": 1,
+      "description": "аа",
+      "type": "expense"
+    },
+    {
+      "id": "9699",
+      "amount": 500.66,
+      "date": "2025-10-10",
+      "category": 6,
+      "description": "dd",
+      "type": "expense"
+    },
+    {
+      "id": "d61e",
+      "amount": 500.66,
+      "date": "2025-10-02",
+      "category": 9,
+      "description": "ww",
+      "type": "income"
+    },
+    {
+      "id": "29c0",
+      "amount": 22.22,
+      "date": "2025-10-10",
+      "category": 1,
+      "description": "Transfer to personal savings account",
+      "type": "expense"
+    },
+    {
+      "id": "9b5b",
+      "amount": 500.66,
+      "date": "2023-02-08",
+      "category": 9,
+      "description": "вввв",
+      "type": "expense"
+    },
+    {
+      "id": "555c",
+      "amount": 666.66,
+      "date": "2006-06-06",
+      "category": 10,
+      "description": "Документы",
+      "type": "income"
+    },
+    {
+      "id": "a0b9",
+      "amount": 500.66,
+      "date": "2025-10-03",
+      "category": 6,
+      "description": "вв",
+      "type": "income"
+    },
+    {
+      "id": "3fc1",
+      "amount": 22.22,
+      "date": "2025-10-04",
+      "category": 1,
+      "description": "2",
+      "type": "expense"
+    },
+    {
+      "id": "908e",
+      "amount": 22.22,
+      "date": "2025-10-03",
+      "category": 1,
+      "description": "ngn",
+      "type": "expense"
+    },
+    {
+      "id": "a949",
+      "amount": 500.66,
+      "date": "2025-10-02",
+      "category": 1,
+      "description": "ff",
+      "type": "income"
+    },
+    {
+      "id": "0884",
+      "amount": 22.22,
+      "date": "2025-10-03",
+      "category": 1,
+      "description": "ццц",
+      "type": "expense"
+    },
+    {
+      "id": "2a1e",
+      "amount": 22.22,
+      "date": "2025-10-03",
+      "category": 1,
+      "description": "вв",
+      "type": "expense"
+    },
+    {
+      "id": "5e66",
+      "amount": 22.22,
+      "date": "2025-10-03",
+      "category": 6,
+      "description": "вв",
+      "type": "expense"
+    },
+    {
+      "id": "26cc",
+      "amount": 22.22,
+      "date": "2025-10-01",
+      "category": 6,
+      "description": "вв",
+      "type": "expense"
+    },
+    {
+      "id": "97cf",
+      "amount": 3333.33,
+      "date": "2025-10-03",
+      "category": 1,
+      "description": "Последний тест",
+      "type": "expense"
+    },
+    {
+      "id": "cffe",
+      "amount": 22.22,
+      "date": "2025-10-03",
+      "category": 1,
+      "description": "vdv",
+      "type": "expense"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Food"
+    },
+    {
+      "id": "2",
+      "name": "Salary"
+    },
+    {
+      "id": "3",
+      "name": "Rent"
+    },
+    {
+      "id": "4",
+      "name": "Utilities"
+    },
+    {
+      "id": "5",
+      "name": "Shopping"
+    },
+    {
+      "id": "6",
+      "name": "Savings"
+    },
+    {
+      "id": "7",
+      "name": "Gifts/Other Income"
+    },
+    {
+      "id": "8",
+      "name": "we"
+    },
+    {
+      "id": "9",
+      "name": "2"
+    },
+    {
+      "id": "10",
+      "name": "222"
+    }
+  ]
+}
