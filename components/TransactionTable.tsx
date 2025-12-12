@@ -25,13 +25,15 @@ export default function TransactionTable({ transactions, categories, onEdit, onD
         setOpenMenuId(prev => prev === id ? null : id);
     };
 
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [searchTerm, itemsPerPage]);
+    // useEffect(() => {
+    //     setCurrentPage(1);
+    // }, [searchTerm,selectedCategory,selectedType, itemsPerPage]);
+
 
     const handleCloseMenu = () => setOpenMenuId(null);
 
     const { filteredTransactions, totalPages } = useMemo(() => {
+
         let filtered = transactions;
 
         if (searchTerm.trim()) {
@@ -41,12 +43,10 @@ export default function TransactionTable({ transactions, categories, onEdit, onD
             );
         }
 
-        // 2. Фильтр по категории
         if (selectedCategory) {
             filtered = filtered.filter((t) => t.category === selectedCategory);
         }
 
-        // 3. Фильтр по типу (income / expense)
         if (selectedType) {
             filtered = filtered.filter((t) => t.type === selectedType);
         }
@@ -66,6 +66,11 @@ export default function TransactionTable({ transactions, categories, onEdit, onD
         currentPage,
         itemsPerPage,]);
 
+    useEffect(() => {
+        if (currentPage > totalPages && totalPages > 0) {
+            setCurrentPage(totalPages);
+        }
+    }, [totalPages, currentPage]);
 
     const getPageNumbers = () => {
         const pages = [];

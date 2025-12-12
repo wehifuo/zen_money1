@@ -19,7 +19,6 @@ export default function Transactions() {
     const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
 
 
-
     const deleteTransaction = async (id: string) => {
         await Api.deleteTransaction(id);
         setTransactions(transactions.filter(tx => tx.id !== id));

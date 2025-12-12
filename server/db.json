@@ -279,6 +279,14 @@
       "category": "6",
       "description": "вв",
       "type": "expense"
+    },
+    {
+      "id": "db5b",
+      "amount": 13.13,
+      "date": "2025-12-12",
+      "description": "траты на себя",
+      "category": "c69c",
+      "type": "expense"
     }
   ],
   "categories": [
