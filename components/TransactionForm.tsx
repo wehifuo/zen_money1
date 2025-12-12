@@ -1,29 +1,87 @@
 'use client';
 
-import { Transaction, TransactionFormData } from '@/types/transaction';
-import { FormEvent} from 'react';
+import { Categorie, Transaction, TransactionFormData } from '@/types/transaction';
+import { FormEvent, useState } from 'react';
+import Api from '@/server/api';
 
 interface Props {
     onSubmit: (data: TransactionFormData) => void;
+    categories: Categorie[];
     initialData?: Transaction | null;
+    onCategoryCreated: (cat:Categorie) => void;
     onCancel: () => void;
 }
 
-export default function TransactionForm({ onSubmit, initialData, onCancel }: Props) {
+export default function TransactionForm({ onSubmit,onCategoryCreated, categories, initialData, onCancel }: Props) {
     const isEditing = !!initialData;
 
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const formData = new FormData(e.currentTarget);
+
+        const today = new Date().toISOString().split('T')[0];
+
+        const form = e.currentTarget;
+        const data = new FormData(form);
+        setErrors({});
+
+
+        const rawAmount = data.get('sum') as string;
+        const amount = Number(rawAmount);
+        if (!rawAmount || amount <= 0) {
+            setErrors(prev => ({ ...prev, amount: 'Сумма должна быть больше 0' }));
+            return;
+        }
+
+        else if (!/^\d+\.\d{2}$/.test(rawAmount)) {
+            setErrors(prev => ({ ...prev, amount: 'Форма суммы xxx.xx' }));
+            return;
+        }
+
+
+        const date = data.get('date') as string;
+        if (!date) {
+            setErrors(prev => ({ ...prev, date: 'Выберите дату' }));
+            return;
+        } else if (date > today) {
+            setErrors(prev => ({ ...prev, date: 'Выберите дату не из будущего' }));
+            return;
+        }
+
+
+        const formElement = e.currentTarget;
+        const categoryName = data.get('categorie') as string;
+
+        let finalCategoryId;
+
+        const existingCategory = categories.find(
+            cat => cat.name.toLowerCase() === categoryName.trim().toLowerCase()
+        );
+
+        if (existingCategory) {
+            finalCategoryId = existingCategory.id;
+        } else {
+            const newCategory = await Api.addCategorie({ name: categoryName.trim() });
+            finalCategoryId = newCategory.id;
+            onCategoryCreated(newCategory);
+        }
 
         const transaction: TransactionFormData = {
-            amount: Number(formData.get('sum')),
-            date: formData.get('date') as string,
-            description: (formData.get('description') as string) || '',
-            category: (formData.get('categorie') as string) || '',
-            type: formData.get('type-transaction') as 'income' | 'expense',
+            amount,
+            date: data.get('date') as string,
+            description: (data.get('description') as string) || '',
+            category: finalCategoryId,
+            type: data.get('type-transaction') as 'income' | 'expense',
         };
+
+        // const transaction: TransactionFormData = {
+        //     amount: Number(formData.get('sum')),
+        //     date: formData.get('date') as string,
+        //     description: (formData.get('description') as string) || '',
+        //     category: (formData.get('categorie') as string) || '',
+        //     type: formData.get('type-transaction') as 'income' | 'expense',
+        // };
 
         if (isEditing && initialData.id) {
             const transactionToUpdate: TransactionFormData = {
@@ -36,7 +94,7 @@ export default function TransactionForm({ onSubmit, initialData, onCancel }: Pro
         }
 
         if (!initialData) {
-            e.currentTarget.reset();
+            formElement.reset();
         }
     };
 
@@ -58,12 +116,14 @@ export default function TransactionForm({ onSubmit, initialData, onCancel }: Pro
                     <input
                         name="sum"
                         id="sum_input"
-                        type="number"
-                        step="0.01"
                         defaultValue={initialData?.amount ?? ''}
                         placeholder="0.00"
                         required
-                        className="h-10 w-full p-3 border border-gray-400 rounded-lg"
+
+                        className={`h-10 w-full p-3 border border-gray-400 rounded-lg ${errors.amount
+                            ? 'border-red-500 bg-red-50'
+                            : 'border-gray-400 focus:border-amber-400'
+                            }`}
                     />
                 </div>
 
@@ -75,7 +135,10 @@ export default function TransactionForm({ onSubmit, initialData, onCancel }: Pro
                         id="date_input"
                         defaultValue={initialData?.date ?? new Date().toISOString().split('T')[0]}
                         required
-                        className="h-10 w-full p-3 border border-gray-400 rounded-lg"
+                        className={`h-10 w-full p-3 border border-gray-400 rounded-lg ${errors.date
+                            ? 'border-red-500 bg-red-50'
+                            : 'border-gray-400 focus:border-amber-400'
+                            }`}
                     />
                 </div>
 

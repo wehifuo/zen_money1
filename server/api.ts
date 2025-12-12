@@ -1,4 +1,4 @@
-import { Transaction, TransactionFormData } from '@/types/transaction';
+import { Transaction, TransactionFormData,Categorie } from '@/types/transaction';
 
 class Api {
   static #baseUrl = 'http://localhost:5000';
@@ -34,8 +34,23 @@ class Api {
     const response = await fetch(`${Api.#baseUrl}/transactions/${id}`, {
       method: 'DELETE',
     });
+
     // может быть надо добавить возврат response.json
   }
+
+  static async getAllCategories() {
+    const response = await fetch(`${Api.#baseUrl}/categories`);
+    return await response.json();
+  }
+
+  static async addCategorie(categ: Categorie) {
+    const response = await fetch(`${Api.#baseUrl}/categories`, {
+      method: 'POST',
+      body: JSON.stringify(categ),
+    });
+    return await response.json();
+  }
+
 
 
 }

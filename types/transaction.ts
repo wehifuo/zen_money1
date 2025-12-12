@@ -5,7 +5,12 @@ export interface Transaction {
   date: string;
   category: string;
   description: string;
-  type: "income" | "expense";
+  type: 'income' | 'expense';
 }
 
-export type TransactionFormData = Omit<Transaction, "id"> & { id?: string };
+export interface Categorie {
+  id?: string;
+  name: string;
+}
+
+export type TransactionFormData = Omit<Transaction, 'id'> & { id?: string };
