@@ -7,3 +7,5 @@ export interface Transaction {
   description: string;
   type: "income" | "expense";
 }
+
+export type TransactionFormData = Omit<Transaction, "id"> & { id?: string };

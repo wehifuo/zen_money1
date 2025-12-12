@@ -343,6 +343,38 @@
       "category": 1,
       "description": "vdv",
       "type": "expense"
+    },
+    {
+      "id": "8d26",
+      "amount": 34,
+      "date": "2025-12-18",
+      "description": "44",
+      "category": "44",
+      "type": "expense"
+    },
+    {
+      "id": "231e",
+      "amount": 44,
+      "date": "2025-12-12",
+      "description": "44",
+      "category": "44",
+      "type": "income"
+    },
+    {
+      "id": "3806",
+      "amount": 43,
+      "date": "2025-12-10",
+      "description": "ddd",
+      "category": "dd",
+      "type": "income"
+    },
+    {
+      "id": "7f4d",
+      "amount": -0.06,
+      "date": "2025-12-12",
+      "description": "e",
+      "category": "e",
+      "type": "income"
     }
   ],
   "categories": [
