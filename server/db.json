@@ -4,40 +4,40 @@
       "id": "13",
       "amount": 120.23,
       "date": "2025-10-13",
-      "category": 3,
-      "description": "Additional rent payment",
+      "category": "3",
+      "description": "Остальный траты",
       "type": "expense"
     },
     {
       "id": "15",
       "amount": 300.67,
       "date": "2025-10-15",
-      "category": 2,
-      "description": "Bonus payment",
-      "type": "income"
+      "category": "2",
+      "description": "Бонус",
+      "type": "expense"
     },
     {
       "id": "16",
       "amount": 25.87,
       "date": "2025-10-16",
-      "category": 5,
-      "description": "Book purchase",
-      "type": "expense"
+      "category": "5",
+      "description": "Траты на книжки",
+      "type": "income"
     },
     {
       "id": "17",
       "amount": 10.25,
       "date": "2025-10-17",
-      "category": 1,
-      "description": "Snack at cafe",
-      "type": "expense"
+      "category": "1",
+      "description": "Кафе",
+      "type": "income"
     },
     {
       "id": "18",
       "amount": 150.09,
       "date": "2025-10-18",
-      "category": 6,
-      "description": "Investment contribution",
+      "category": "6",
+      "description": "Магазин",
       "type": "expense"
     },
     {
@@ -84,8 +84,8 @@
       "id": "8145",
       "amount": 500.44,
       "date": "2025-10-11",
-      "category": 6,
-      "description": "Transfer to personal savings account",
+      "category": "6",
+      "description": "Перевод на другой счет",
       "type": "expense"
     },
     {

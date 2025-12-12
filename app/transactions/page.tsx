@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Api from '@/server/api';
 import TransactionForm from '@/components/TransactionForm'
 import TransactionTable from '@/components/TransactionTable';
-import { Transaction,TransactionFormData } from '@/types/transaction';
+import { Transaction, TransactionFormData } from '@/types/transaction';
 import { FormEvent, ChangeEvent } from 'react';
 
 export default function Transactions() {
@@ -29,17 +29,6 @@ export default function Transactions() {
         }
     };
 
-    const updateTransaction = async (e: ChangeEvent<HTMLFormElement>, transData: Transaction) => {
-        e.preventDefault()
-        const formData = new FormData(e.target)
-        const newTrans = await Api.addTransaction(transData)
-        setTransactions([...transactions, newTrans])
-    }
-
-    const updateTransaction1 = (updatedTr: Transaction) => {
-        setTransactions(transactions.map(tr => tr.id === updatedTr.id ? updatedTr : tr));
-        setEditingTransaction(null);
-    };
 
     const deleteTransaction = (id: string) => {
         setTransactions(transactions.filter(tx => tx.id !== id));
@@ -53,13 +42,17 @@ export default function Transactions() {
             <div className="container mx-auto p-4">
                 <div className="mb-10">
                     <TransactionForm
+                        key={editingTransaction?.id || 'new'}
                         onSubmit={addOrEditTrans}
                         initialData={editingTransaction}
+                        onCancel={() => {
+                            setEditingTransaction(null);
+                        }}
                     />
                 </div>
                 <TransactionTable
                     transactions={transactions}
-                    onEdit={addOrEditTrans}
+                    onEdit={setEditingTransaction}
                     onDelete={deleteTransaction}
                 />
             </div>

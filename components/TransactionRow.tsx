@@ -18,23 +18,6 @@ export default function TransactionRow({ trans, toggleMenu, isMenuOpen, onCloseM
         if (action === 'edit') onEdit(trans);
         if (action === 'delete') onDelete(trans.id);
     };
-    
-    const menuRef = useRef<HTMLDivElement>(null);
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-                onCloseMenu();
-            }
-        };
-
-        if (isMenuOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [isMenuOpen, onCloseMenu]);
 
     return (
         <tr className="h-14 text-center odd:bg-white even:bg-gray-100" key={trans.id}>
@@ -54,10 +37,10 @@ export default function TransactionRow({ trans, toggleMenu, isMenuOpen, onCloseM
                     data-trans-id={trans.id}>
                     <button type="button"
                         className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 edit-trans-btn"
-                        data-id={trans.id}>Редактировать</button>
+                        data-id={trans.id} onClick={()=>handleAction('edit')}>Редактировать</button>
                     <button type="button"
                         className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 delete-trans-btn"
-                        data-id={trans.id}>Удалить </button>
+                        data-id={trans.id} onClick={()=>handleAction('delete')}>Удалить </button>
                 </div>
             </td>
         </tr>

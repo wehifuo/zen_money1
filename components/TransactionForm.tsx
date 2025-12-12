@@ -1,12 +1,12 @@
 'use client';
 
 import { Transaction, TransactionFormData } from '@/types/transaction';
-import { FormEvent } from 'react';
+import { FormEvent} from 'react';
 
 interface Props {
     onSubmit: (data: TransactionFormData) => void;
     initialData?: Transaction | null;
-    onCancel?: () => void;
+    onCancel: () => void;
 }
 
 export default function TransactionForm({ onSubmit, initialData, onCancel }: Props) {
@@ -25,7 +25,15 @@ export default function TransactionForm({ onSubmit, initialData, onCancel }: Pro
             type: formData.get('type-transaction') as 'income' | 'expense',
         };
 
-        onSubmit(transaction);
+        if (isEditing && initialData.id) {
+            const transactionToUpdate: TransactionFormData = {
+                ...transaction,
+                id: initialData.id,
+            };
+            onSubmit(transactionToUpdate);
+        } else {
+            onSubmit(transaction);
+        }
 
         if (!initialData) {
             e.currentTarget.reset();
@@ -75,7 +83,7 @@ export default function TransactionForm({ onSubmit, initialData, onCancel }: Pro
                     <p>Категория</p>
                     <input
                         name="categorie"
-                        id="categorie_input"
+                        type="categorie_input"
                         defaultValue={initialData?.category ?? ''}
                         placeholder="Продукты, подарки..."
                         required
@@ -87,7 +95,7 @@ export default function TransactionForm({ onSubmit, initialData, onCancel }: Pro
                     <p>Тип</p>
                     <select
                         name="type-transaction"
-                        defaultValue={initialData?.type ?? 'expense'}
+                        defaultValue={initialData?.type ?? 'income'}
                         className="h-10 p-2 border border-gray-300 rounded-lg"
                     >
                         <option value="income">Доход</option>
@@ -101,7 +109,7 @@ export default function TransactionForm({ onSubmit, initialData, onCancel }: Pro
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                     <input
                         name="description"
-                        id="description_input"
+                        type="description_input"
                         defaultValue={initialData?.description ?? ''}
                         placeholder="Краткое описание..."
                         className="h-10 p-3 flex-1 border border-gray-400 rounded-lg"
