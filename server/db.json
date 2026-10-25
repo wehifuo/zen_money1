@@ -49,14 +49,6 @@
       "type": "expense"
     },
     {
-      "id": "20",
-      "amount": 90.12,
-      "date": "2025-10-20",
-      "category": "4",
-      "description": "Gas bill",
-      "type": "expense"
-    },
-    {
       "id": "21",
       "amount": 175.34,
       "date": "2025-10-21",
@@ -158,14 +150,6 @@
       "date": "2025-10-17",
       "category": "8",
       "description": "ww",
-      "type": "income"
-    },
-    {
-      "id": "7802",
-      "amount": 22.22,
-      "date": "2025-10-02",
-      "category": "1",
-      "description": "Выигрышь в лотерею",
       "type": "income"
     },
     {
@@ -287,6 +271,22 @@
       "description": "траты на себя",
       "category": "c69c",
       "type": "expense"
+    },
+    {
+      "id": "ab6c",
+      "amount": 10.99,
+      "date": "2025-12-18",
+      "description": "воарароа",
+      "category": "ea65",
+      "type": "expense"
+    },
+    {
+      "id": "a341",
+      "amount": 12,
+      "date": "2026-10-25",
+      "description": "sdsd",
+      "category": "5e24",
+      "type": "income"
     }
   ],
   "categories": [
@@ -345,6 +345,14 @@
     {
       "id": "01c2",
       "name": "new1"
+    },
+    {
+      "id": "ea65",
+      "name": "Еда"
+    },
+    {
+      "id": "5e24",
+      "name": "dsd"
     }
   ]
 }

@@ -1,36 +1,192 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FinApp — учёт личных финансов
 
-## Getting Started
+Небольшое веб-приложение для учёта доходов и расходов: список транзакций с поиском,
+фильтрами и пагинацией, создание, редактирование и удаление операций.
+Данные хранятся в JSON-файле, в качестве бэкенда используется
+[JSON Server](https://github.com/typicode/json-server).
 
-First, run the development server:
+## Стек
+
+| Технология | Версия | Назначение |
+| --- | --- | --- |
+| [Next.js](https://nextjs.org) (App Router) | 16 | Фронтенд, маршрутизация |
+| React | 19 | UI |
+| TypeScript | 5 | Типизация |
+| Tailwind CSS | 4 | Стили |
+| JSON Server | 1.0 beta | REST API поверх `server/db.json` |
+| ESLint | 9 | Линтинг (`eslint-config-next`) |
+
+## Возможности
+
+- Просмотр истории операций в таблице (дата, категория, описание, тип, сумма).
+- Поиск по описанию и названию категории, фильтрация по категории и типу.
+- Сортировка по дате и сумме (по возрастанию/убыванию).
+- Пагинация с выбором количества строк на странице (10 / 20 / 50).
+- Создание транзакции с валидацией суммы и даты (дата не из будущего).
+- Редактирование на отдельной странице `/transactions/:id/edit` и удаление
+  с подтверждением через выпадающее меню в строке.
+- Автоматическое создание категории при вводе нового названия в форме:
+  если категория с таким именем уже есть (без учёта регистра), используется она.
+- Состояния загрузки и понятные сообщения об ошибках, если API недоступен.
+- Суммы и даты форматируются по-русски, типы операций подписаны.
+
+## Требования
+
+- Node.js **20.9+** (требование Next.js 16)
+- npm
+
+## Запуск
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Нужны **два** процесса в отдельных терминалах.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Мок-бэкенд (порт `5000`):
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   npm run server
+   ```
 
-## Learn More
+2. Приложение (порт `3000`):
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Открыть [http://localhost:3000](http://localhost:3000) — главная страница сразу
+показывает список транзакций. Альтернативный адрес: `/transactions`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> Фронтенд обращается к API по адресу из `NEXT_PUBLIC_API_URL`, по умолчанию
+> `http://localhost:5000`. Пока не запущен `npm run server`, приложение покажет
+> сообщение об ошибке загрузки. Пример переменных окружения — `.env.example`.
 
-## Deploy on Vercel
+## Переменные окружения
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Переменная | Значение по умолчанию | Назначение |
+| --- | --- | --- |
+| `NEXT_PUBLIC_API_URL` | `http://localhost:5000` | Базовый URL JSON Server |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Чтобы изменить адрес, создайте `.env.local`:
+
+```bash
+cp .env.example .env.local
+```
+
+## Скрипты
+
+| Команда | Что делает |
+| --- | --- |
+| `npm run dev` | Dev-сервер Next.js (Turbopack) на `:3000` |
+| `npm run server` | JSON Server на `:5000` с данными из `server/db.json` |
+| `npm run build` | Production-сборка |
+| `npm run start` | Запуск собранного приложения |
+| `npm run lint` | Проверка ESLint |
+| `npm run typecheck` | Проверка типов TypeScript |
+
+## Структура проекта
+
+```
+.
+├── app/                          # маршруты Next.js (App Router)
+│   ├── layout.tsx                # корневой layout, метаданные
+│   ├── page.tsx                  # главная страница (список транзакций)
+│   ├── globals.css               # Tailwind
+│   └── transactions/
+│       ├── page.tsx              # страница /transactions
+│       ├── create/page.tsx       # /transactions/create — создание
+│       └── [id]/edit/page.tsx    # /transactions/:id/edit — редактирование
+├── components/
+│   ├── AppHeader.tsx             # шапка с логотипом
+│   ├── TransactionsView.tsx      # загрузка данных и список операций
+│   ├── TransactionForm.tsx       # форма создания/редактирования
+│   ├── TransactionTable.tsx      # таблица, поиск, фильтры, сортировка, пагинация
+│   └── TransactionRow.tsx        # строка таблицы с меню действий
+├── lib/
+│   └── format.ts                 # форматирование суммы/даты, локальная дата
+├── server/
+│   ├── api.ts                    # типизированный клиент к JSON Server
+│   └── db.json                   # "база данных" (транзакции + категории)
+└── types/
+    └── transaction.ts            # Transaction, Categorie, TransactionFormData
+```
+
+## API
+
+Все запросы идут на базовый URL из `NEXT_PUBLIC_API_URL` (JSON Server).
+
+| Метод | Путь | Описание |
+| --- | --- | --- |
+| `GET` | `/transactions` | Список транзакций |
+| `GET` | `/transactions/:id` | Одна транзакция |
+| `POST` | `/transactions` | Создать транзакцию |
+| `PATCH` | `/transactions/:id` | Обновить транзакцию |
+| `DELETE` | `/transactions/:id` | Удалить транзакцию |
+| `GET` | `/categories` | Список категорий |
+| `POST` | `/categories` | Создать категорию |
+
+JSON Server также поддерживает query-параметры (`?_sort=`, `?_page=`, `?q=` и др.),
+но в текущей версии приложения поиск, фильтрация и пагинация выполняются на клиенте.
+
+## Модель данных
+
+```ts
+interface Transaction {
+  id: string;
+  amount: number;
+  date: string;        // YYYY-MM-DD
+  category: string;    // id категории
+  description: string;
+  type: 'income' | 'expense';
+}
+
+interface Categorie {
+  id?: string;         // генерируется JSON Server при создании
+  name: string;
+}
+```
+
+Пример `server/db.json`:
+
+```json
+{
+  "transactions": [
+    {
+      "id": "13",
+      "amount": 120.25,
+      "date": "2025-10-13",
+      "category": "3",
+      "description": "Остальные траты",
+      "type": "expense"
+    }
+  ],
+  "categories": [{ "id": "3", "name": "Rent" }]
+}
+```
+
+## Правила валидации
+
+- Сумма обязательна, должна быть больше `0` и иметь не больше двух знаков
+  после запятой или точки: `123`, `123.45`, `123,45` — корректны.
+- Дата обязательна и не может быть позже сегодняшнего дня (локальная дата).
+- Категория обязательна, имя обрезается от пробелов; пустое имя не принимается.
+- Повторная отправка формы блокируется, пока идёт сохранение.
+
+## Данные и git
+
+`server/db.json` хранится в репозитории и **изменяется при работе приложения**
+(JSON Server пишет в файл). Поэтому после создания/удаления записей файл
+оказывается изменённым в `git status`. Это ожидаемо: файл одновременно играет роль
+сидов и рабочей базы. Сбросить данные к последнему коммиту:
+
+```bash
+git checkout -- server/db.json
+```
+
+## Известные ограничения
+
+- JSON Server — мок-бэкенд для локальной разработки, не для production.
+- Нет авторизации и разделения данных между пользователями.
+- Приложение рассчитано на одну валюту — BYN (константа в `lib/format.ts`).
+- Нет автоматических тестов и CI.

@@ -1,9 +1,5 @@
-import Transactions from './transactions/page';
+import TransactionsView from '@/components/TransactionsView';
 
 export default function Home() {
-    return (
-        <div>
-            <Transactions />
-        </div>
-    );
+  return <TransactionsView />;
 }

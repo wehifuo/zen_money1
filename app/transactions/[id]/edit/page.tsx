@@ -1,56 +1,116 @@
 'use client';
-import { useState, useEffect } from 'react';
-import Api from '@/server/api';
-import TransactionForm from '@/components/TransactionForm'
-import TransactionTable from '@/components/TransactionTable';
-import { Transaction, TransactionFormData } from '@/types/transaction';
-import { FormEvent, ChangeEvent } from 'react';
 
-export default function Transactions() {
-    const [transactions, setTransactions] = useState<Transaction[]>([]);
+import Link from 'next/link';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import Api, { ApiError } from '@/server/api';
+import AppHeader from '@/components/AppHeader';
+import TransactionForm from '@/components/TransactionForm';
+import { Categorie, Transaction, TransactionFormData } from '@/types/transaction';
 
-    useEffect(() => {
-        Api.getAllTransactions().then(setTransactions);
-    }, []);
+export default function EditTransactionPage() {
+  const router = useRouter();
+  const params = useParams<{ id: string }>();
+  const id = params?.id;
 
-    const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
+  const [transaction, setTransaction] = useState<Transaction | null>(null);
+  const [categories, setCategories] = useState<Categorie[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [notFound, setNotFound] = useState(false);
 
-    const addOrEditTrans = async (transactionData: TransactionFormData) => {
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
 
-        if (editingTransaction) {
-            const updated = await Api.editTransaction(transactionData);
-            setTransactions(prev =>
-                prev.map(t => (t.id === updated.id ? updated : t))
-            );
-            setEditingTransaction(null);
-        } else {
-            const newTrans = await Api.addTransaction(transactionData);
-            setTransactions(prev => [...prev, newTrans]);
+    let cancelled = false;
+
+    Promise.all([Api.getTransaction(id), Api.getAllCategories()])
+      .then(([transactionData, categoriesData]) => {
+        if (cancelled) {
+          return;
         }
+
+        setTransaction(transactionData);
+        setCategories(categoriesData);
+      })
+      .catch((loadError: unknown) => {
+        if (cancelled) {
+          return;
+        }
+
+        if (loadError instanceof ApiError && loadError.status === 404) {
+          setNotFound(true);
+          return;
+        }
+
+        setError(
+          loadError instanceof Error ? loadError.message : 'Не удалось загрузить транзакцию',
+        );
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
     };
+  }, [id]);
 
-    const deleteTransaction = async (id: string) => {
-        await Api.deleteTransaction(id);
-        setTransactions(transactions.filter(tx => tx.id !== id));
-    };
+  const saveTransaction = async (data: TransactionFormData) => {
+    await Api.editTransaction(data);
+    router.push('/transactions');
+  };
 
-    return (
-        <main className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
-            <h1 className="text-4xl font-bold mt-8 mb-8 text-left">FinApp</h1>
-            <div className="container mx-auto p-4">
-                <div className="mb-10">
-                    <TransactionForm
-                        key={editingTransaction?.id || 'new'}
-                        onSubmit={addOrEditTrans}
-                        initialData={editingTransaction}
-                        onCancel={() => {
-                            setEditingTransaction(null);
-                        }}
-                    />
-                    <p>прпрпрпрррррррррррррр</p>
-                </div>
-            </div>
+  const cancel = () => router.push('/transactions');
 
-        </main>
-    );
+  return (
+    <main className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+      <AppHeader>
+        <Link href="/transactions" className="text-amber-600 hover:text-amber-500 font-medium">
+          ← К списку операций
+        </Link>
+      </AppHeader>
+
+      <div className="container mx-auto p-4">
+        {isLoading && <p className="text-gray-600">Загрузка…</p>}
+
+        {!isLoading && notFound && (
+          <div className="rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-700">
+            Транзакция не найдена.{' '}
+            <Link href="/transactions" className="underline">
+              Вернуться к списку
+            </Link>
+          </div>
+        )}
+
+        {!isLoading && error && (
+          <div
+            role="alert"
+            className="rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-red-700"
+          >
+            {error}
+          </div>
+        )}
+
+        {!isLoading && transaction && (
+          <TransactionForm
+            key={transaction.id}
+            categories={categories}
+            onCategoryCreated={(cat) =>
+              setCategories((prev) =>
+                prev.some((category) => category.id === cat.id) ? prev : [...prev, cat],
+              )
+            }
+            onSubmit={saveTransaction}
+            initialData={transaction}
+            onCancel={cancel}
+          />
+        )}
+      </div>
+    </main>
+  );
 }
